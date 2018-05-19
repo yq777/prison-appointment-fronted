@@ -1,5 +1,6 @@
 <template>
   <div class="register-page">
+    <img src="../assets/bg1.jpeg" alt=""/>
     <div class="g-register-wrap">
       <div class="u-title">用户注册</div>
       <el-form class="m-form" label-width="90px">
@@ -13,10 +14,10 @@
           <el-input v-model="idCard"></el-input>
         </el-form-item>
         <el-form-item label="密码:" required>
-          <el-input v-model="password"></el-input>
+          <el-input type="password" v-model="password"></el-input>
         </el-form-item>
         <el-form-item label="确认密码:" required>
-          <el-input v-model="confirmPassword"></el-input>
+          <el-input type="password" v-model="confirmPassword"></el-input>
         </el-form-item>
         <el-form-item label="角色:" required>
           <el-select v-model="role">
@@ -35,6 +36,8 @@
 </template>
 
 <script>
+  import StringUtils from "../utils/StringUtils";
+
   export default {
     data() {
       return {
@@ -51,39 +54,74 @@
     methods: {
       register() {
         const pattern = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+        if (StringUtils.isBlank(this.email)) {
+          this.$message.error("请输入邮箱");
+          return false;
+        }
         if (!pattern.test(this.email)) {
           this.$message.error("邮箱格式不正确，请输入正确的邮箱");
           return false;
         }
+        if (StringUtils.isBlank(this.username)) {
+          this.$message.error("请输入姓名");
+          return false;
+        }
+        if (StringUtils.isBlank(this.idCard)) {
+          this.$message.error("请输入身份证");
+          return false;
+        }
+        if (StringUtils.isBlank(this.password)) {
+          this.$message.error("请输入密码");
+          return false;
+        }
+        if (StringUtils.isBlank(this.confirmPassword)) {
+          this.$message.error("请输入确认密码");
+          return false;
+        }
+        if (this.password === this.confirmPassword) {
+          this.$message.error("您两次输入的密码不一致,请重新输入");
+          return false;
+        }
+        this.$router.replace({
+          name: 'login'
+        })
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .g-register-wrap {
-    width: 300px;
-    margin: 100px auto;
-    box-shadow: 0 0 20px #ccc;
-    background-color: #eee;
-    .u-title {
-      height: 50px;
-      line-height: 50px;
-      font-weight: 700;
-      font-size: 20px;
-      text-align: center;
-      border-bottom: #ccc 1px solid;
-    }
-    .m-form {
-      padding: 10px 10px 0;
-    }
-    .m-button {
-      padding: 0 10px 10px;
-      .u-button {
-        width: 100%;
+  .register-page {
+    .g-register-wrap {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      z-index: 1;
+      width: 300px;
+      margin-left: -150px;
+      box-shadow: 0 0 20px #ccc;
+      background-color: #ACC7E6;
+      .u-title {
+        height: 50px;
+        line-height: 50px;
+        font-weight: 700;
+        font-size: 20px;
         text-align: center;
+        border-bottom: #ccc 1px solid;
       }
-    }
+      .m-form {
+        padding: 10px 10px 0;
+      }
+      .m-button {
+        padding: 0 10px 10px;
+        .u-button {
+          width: 100%;
+          text-align: center;
+        }
+      }
 
+    }
   }
+
+
 </style>

@@ -7,7 +7,7 @@
     <el-table :data="bailerList">
       <el-table-column label="序号">
         <template slot-scope="scope">
-          {{scope.$index}}
+          {{scope.$index + 1}}
         </template>
       </el-table-column>
       <el-table-column label="姓名" prop="name"></el-table-column>
@@ -42,7 +42,7 @@
       </el-form>
       <span slot="footer">
     <el-button @click="editStatusShow = false">取 消</el-button>
-    <el-button type="primary" @click="editStatusShow = false">确 定</el-button>
+    <el-button type="primary" @click="editStatus">确 定</el-button>
   </span>
     </el-dialog>
     <el-dialog :visible.sync="meetContentShow" title="会见记录" width="35%">
@@ -59,6 +59,7 @@
 <script>
   import ElInput from "../../node_modules/element-ui/packages/input/src/input.vue";
   import ObjectUtils from "../utils/ObjectUtils";
+  import StringUtils from "../utils/StringUtils";
 
   export default {
     components: {ElInput},
@@ -93,6 +94,13 @@
         }).then(() => {
 
         })
+      },
+      editStatus() {
+        if (StringUtils.isBlank(this.meet_record)) {
+          this.$message.error("请输入会见记录");
+          return false;
+        }
+        this.editStatusShow = false;
       }
     }
   }

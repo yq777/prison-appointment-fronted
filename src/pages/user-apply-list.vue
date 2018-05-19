@@ -52,12 +52,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="会见描述:" required>
-          <el-input type="textarea" :rows="4" placeholder="请输入会见描述信息"></el-input>
+          <el-input type="textarea" :rows="4" v-model="description" placeholder="请输入会见描述信息"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer">
     <el-button @click="addMeetingApplyShow = false">取 消</el-button>
-    <el-button type="primary" @click="addMeetingApplyShow = false">确 定</el-button>
+    <el-button type="primary" @click="addMeetApply">确 定</el-button>
   </span>
     </el-dialog>
     <el-dialog :visible.sync="editMeetingApplyShow" title="更新/查看会见申请信息" width="35%">
@@ -67,13 +67,16 @@
         </el-form-item>
         <el-form-item v-show="selectedApplyInfo.status === '2'" label="会见地点:" required>
         </el-form-item>
-        <el-form-item label="会见描述:" required>
-          <el-input type="textarea" :rows="4" placeholder="请输入会见描述信息"></el-input>
+        <el-form-item v-show="selectedApplyInfo.status === '1'" label="会见描述:" required>
+          <el-input type="textarea" v-model="content" :rows="4" placeholder="请输入会见描述信息"></el-input>
+        </el-form-item>
+        <el-form-item v-show="selectedApplyInfo.status === '2'" label="会见描述:" required>
+          <span></span>
         </el-form-item>
       </el-form>
       <span slot="footer">
     <el-button @click="editMeetingApplyShow = false">取 消</el-button>
-    <el-button type="primary" @click="editMeetingApplyShow = false">确 定</el-button>
+    <el-button type="primary" @click="editMeetApply">确 定</el-button>
   </span>
     </el-dialog>
     <el-dialog :visible.sync="prisonInfoShow" title="罪犯信息" width="35%">
@@ -87,8 +90,8 @@
         <el-form-item label="入狱原因:">
           <span></span>
         </el-form-item>
-        <el-form-item label="刑长:">
-          <span>天</span>
+        <el-form-item label="入狱时间:">
+          <span></span>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -98,11 +101,11 @@
 
 <script>
   import ObjectUtils from "../utils/ObjectUtils";
+  import StringUtils from "../utils/StringUtils";
 
   export default {
     data() {
       return {
-        prisonList:[],
         applyList: [
           {
             name: '111',
@@ -132,6 +135,7 @@
         selectedApplyInfo: {},
         prisonInfo: {},
         prisonList: [],
+        content: '',
         list: [{
           label: 'haha',
           value: 'haha',
@@ -145,7 +149,8 @@
             value: 'haha',
           },
         ],
-        loading: false
+        loading: false,
+        description: ''
       }
     },
     created() {
@@ -174,6 +179,25 @@
       },
       showPrisonInfo(val) {
         this.prisonInfoShow = true;
+      },
+      addMeetApply() {
+        if (StringUtils.isBlank(this.prison_id)) {
+          this.$message.error("请选择会见人员");
+          return false;
+        }
+
+        if (StringUtils.isBlank(this.description)) {
+          this.$message.error("请输入会见描述");
+          return false;
+        }
+        this.addMeetingApplyShow = false;
+      },
+      editMeetApply() {
+        if (StringUtils.isBlank(this.content)) {
+          this.$message.error("请输入会见描述");
+          return false;
+        }
+        this.editMeetingApplyShow = false;
       },
       logout() {
         this.$confirm("退出登录？", "提示", {

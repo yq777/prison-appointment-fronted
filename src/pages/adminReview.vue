@@ -1,9 +1,8 @@
 <template>
-
   <div class="adminReview-page">
     <div class="adminReview-page-admin-info">
       <span style="margin-right: 10px">欢迎，XXX</span>
-      <el-button type="text" size="middle"  @click="logout">退出</el-button>
+      <el-button type="text" size="middle" @click="logout">退出</el-button>
     </div>
     <div class="adminReview-page-form">
       <el-table
@@ -44,9 +43,9 @@
           <template slot-scope="scope">
             <el-button type="text" v-show="scope.row.status == 0" @click="pass(scope.row)">通过</el-button>
             <el-button type="text" v-show="scope.row.status == 0" @click="refuse(scope.row)">拒绝</el-button>
-            <el-button type="text"  v-show="scope.row.status == 1" @click="pass(scope.row)">通过</el-button>
+            <el-button type="text" v-show="scope.row.status == 1" @click="pass(scope.row)">通过</el-button>
             <el-button type="text" v-show="scope.row.status == 2" @click="refuse(scope.row)">拒绝</el-button>
-            <span  v-show="scope.row.status==  3">-</span>
+            <span v-show="scope.row.status==  3">-</span>
           </template>
         </el-table-column>
         <el-table-column prop="meet_record" label="备注" width="180">
@@ -55,10 +54,10 @@
       </el-table>
 
       <el-dialog title="会见审核" :visible.sync="dialogFormVisible" width="30%">
-        <el-form >
+        <el-form>
           <el-form-item label="会见时间" :label-width="formLabelWidth" required="required">
-            <el-date-picker v-model="meet_time" type="datetime"  placeholder="选择日期时间"
-                             value-format="yyyy-MM-dd HH:mm:ss" default-time="12:00:00">
+            <el-date-picker v-model="meet_time" type="datetime" placeholder="选择日期时间"
+                            value-format="yyyy-MM-dd HH:mm:ss" default-time="12:00:00">
             </el-date-picker>
           </el-form-item>
           <el-form-item label="会见地点" :label-width="formLabelWidth" required="required">
@@ -79,6 +78,7 @@
 <script>
   import ElButton from "../../node_modules/element-ui/packages/button/src/button.vue";
   import ObjectUtils from "../utils/ObjectUtils";
+  import StringUtils from "../utils/StringUtils";
 
   export default {
     components: {ElButton},
@@ -127,7 +127,7 @@
         }],
         formLabelWidth: '120px',
         dialogFormVisible: false,
-        appointment:{},
+        appointment: {},
         meet_time: '',
         meet_pos: '',
       }
@@ -136,26 +136,34 @@
     },
     methods: {
       pass(obj) {
-        this.appointment =  ObjectUtils.deepCopy(obj);
+        this.appointment = ObjectUtils.deepCopy(obj);
         this.dialogFormVisible = true;
         this.meet_time = this.appointment.meet_time;
         this.meet_pos = this.appointment.meet_pos;
       },
       refuse(obj) {
-        this.$confirm("是否拒绝？","提示",{
-          type:"warning",
-        }).then(()=>{
+        this.$confirm("是否拒绝？", "提示", {
+          type: "warning",
+        }).then(() => {
 
         })
 
       },
-      confirm(){
+      confirm() {
+        if (StringUtils.isBlank(this.meet_time)) {
+          this.$message.error("请选择会见时间");
+          return false;
+        }
+        if (StringUtils.isBlank(this.meet_pos)) {
+          this.$message.error("请选择会见地点");
+          return false;
+        }
         this.dialogFormVisible = false
       },
       logout() {
-        this.$confirm("是否退出当前登录？","提示",{
-          type:"warning",
-        }).then(()=>{
+        this.$confirm("是否退出当前登录？", "提示", {
+          type: "warning",
+        }).then(() => {
 
         })
 
@@ -167,7 +175,8 @@
   .el-button + .el-button {
     margin-left: 0px;
   }
-  .adminReview-page-admin-info{
+
+  .adminReview-page-admin-info {
     height: 50px;
     line-height: 50px;
     margin-left: 5px;
