@@ -2,7 +2,7 @@
   <div class="bailer-index-page">
     <div class="m-bailer-info">
       <span style="margin-right: 10px">欢迎，XXX</span>
-      <el-button type="text" size="middle">退出</el-button>
+      <el-button type="text" size="middle" @click="logout">退出</el-button>
     </div>
     <el-table :data="bailerList">
       <el-table-column label="序号">
@@ -86,6 +86,13 @@
       showEditStatus(val) {
         this.selectedPrison = ObjectUtils.deepCopy(val);
         this.editStatusShow = true;
+      },
+      logout() {
+        this.$confirm("退出登录？", "提示", {
+          type: 'warning'
+        }).then(() => {
+
+        })
       }
     }
   }

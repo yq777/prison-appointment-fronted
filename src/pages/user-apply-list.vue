@@ -2,7 +2,7 @@
   <div class="user-apply-list-page">
     <div class="m-user-info">
       <span style="margin-right: 10px">欢迎，XXX</span>
-      <el-button type="text" size="middle">退出</el-button>
+      <el-button type="text" size="middle" @click="logout">退出</el-button>
     </div>
     <div class="m-add">
       <el-button type="primary" @click="addMeetingApply">新增会见申请</el-button>
@@ -130,6 +130,7 @@
         prison_id: '',
         selectedApplyInfo: {},
         prisonInfo: {},
+        prisonList: [],
         list: [{
           label: 'haha',
           value: 'haha',
@@ -172,6 +173,13 @@
       },
       showPrisonInfo(val) {
         this.prisonInfoShow = true;
+      },
+      logout() {
+        this.$confirm("退出登录？", "提示", {
+          type: 'warning'
+        }).then(() => {
+
+        })
       }
     }
   }
@@ -187,7 +195,7 @@
     .m-add {
       display: flex;
       justify-content: flex-end;
-      margin: 10px;
+      margin: 0 10px 10px;
     }
     .u-prison-name {
       color: #57AAFF;
