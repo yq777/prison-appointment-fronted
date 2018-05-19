@@ -1,5 +1,9 @@
 <template>
   <div class="user-apply-list-page">
+    <div class="m-user-info">
+      <span style="margin-right: 10px">欢迎，XXX</span>
+      <el-button type="text" size="middle">退出</el-button>
+    </div>
     <div class="m-add">
       <el-button type="primary" @click="addMeetingApply">新增会见申请</el-button>
     </div>
@@ -175,6 +179,11 @@
 
 <style lang="less">
   .user-apply-list-page {
+    .m-user-info {
+      height: 50px;
+      line-height: 50px;
+      margin-left: 5px;
+    }
     .m-add {
       display: flex;
       justify-content: flex-end;
