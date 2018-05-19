@@ -1,15 +1,27 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import Router from 'vue-router';
 
-Vue.use(Router)
+Vue.use(Router);
+import Register from "../pages/register.vue";
+import UserApplyList from "../pages/user-apply-list.vue";
+import BailerIndex from "../pages/bailer-index.vue";
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/register',
+      name: 'register',
+      component: Register
+    },
+    {
+      path: '/user/apply/list',
+      name: 'userApply',
+      component: UserApplyList
+    },
+    {
+      path: '/bailer/index',
+      name: 'bailerIndex',
+      component: BailerIndex
     }
   ]
 })
