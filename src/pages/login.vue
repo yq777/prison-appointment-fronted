@@ -1,6 +1,6 @@
 <template>
   <div class="login-page">
-    <img src="../assets/bg1.jpeg" alt=""/>
+    <img ref="img" style="overflow: hidden" src="../assets/bg1.jpeg" alt=""/>
     <div class="login-page-form">
       <div class="login-page-form-head">用户登录</div>
       <el-form label-width="80px">
@@ -45,6 +45,13 @@
       }
     },
     created() {
+    },
+    mounted() {
+      let w = window.innerWidth;
+      let h = window.innerHeight;
+      console.log(this.$refs.img);
+      this.$refs.img.width = w;
+      this.$refs.img.height = h;
     },
     methods: {
       login() {

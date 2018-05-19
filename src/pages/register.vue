@@ -1,6 +1,6 @@
 <template>
   <div class="register-page">
-    <img src="../assets/bg1.jpeg" alt=""/>
+    <img ref="img" style="overflow: hidden" src="../assets/bg1.jpeg" alt=""/>
     <div class="g-register-wrap">
       <div class="u-title">用户注册</div>
       <el-form class="m-form" label-width="90px">
@@ -50,6 +50,13 @@
       }
     },
     created() {
+    },
+    mounted() {
+      let w = window.innerWidth;
+      let h = window.innerHeight;
+      console.log(this.$refs.img);
+      this.$refs.img.width = w;
+      this.$refs.img.height = h;
     },
     methods: {
       register() {
