@@ -102,6 +102,7 @@
   export default {
     data() {
       return {
+        prisonList:[],
         applyList: [
           {
             name: '111',
