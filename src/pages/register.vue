@@ -37,6 +37,7 @@
 
 <script>
   import StringUtils from "../utils/StringUtils";
+  import axios from 'axios';
 
   export default {
     data() {
@@ -85,13 +86,27 @@
           this.$message.error("请输入确认密码");
           return false;
         }
-        if (this.password === this.confirmPassword) {
+        if (this.password !== this.confirmPassword) {
           this.$message.error("您两次输入的密码不一致,请重新输入");
           return false;
         }
-        this.$router.replace({
-          name: 'login'
-        })
+        axios({
+          method: 'POST',
+          url: '/api/register',
+          'Content-Type': 'application/json',
+          'X-Reply-Type': JSON,
+          data: {
+            id: null,
+            idCard: '362528199512235021',
+            mail: '1045046593@qq.com',
+            name: 'yq',
+            pwd: '123456'
+          }
+        }).then(() => {
+          this.$router.replace({
+            name: 'login'
+          })
+        });
       }
     }
   }
